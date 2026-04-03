@@ -1,12 +1,22 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('angular-color-picker-app');
+  selectedColor = signal('#ff0000');
+
+  onColorChange(newColor: string) {
+    this.selectedColor.set(newColor);
+  }
+  copyColor() {
+    navigator.clipboard.writeText(this.selectedColor()).then(() => {
+      alert('Color code copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy color code: ', err);
+    });
+  }
 }
